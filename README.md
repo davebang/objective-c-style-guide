@@ -183,14 +183,14 @@ UIButton *settingsButton;
 UIButton *setBut;
 ```
 
-A three letter prefix should always be used for class names and constants, however may be omitted for Core Data entity names. For any official raywenderlich.com books, starter kits, or tutorials, the prefix 'RWT' should be used.
+It is no longer necessary to use a three letter prefix for all class names in a project. Exception: a three letter prefix should still be used for reusable classes.
 
-Constants should be camel-case with all words capitalized and prefixed by the related class name for clarity.
+Constants should be camel-case with all words capitalized.
 
 **Preferred:**
 
 ```objc
-static NSTimeInterval const RWTTutorialViewControllerNavigationFadeAnimationDuration = 0.3;
+static NSTimeInterval const NavigationFadeAnimationDuration = 0.3;
 ```
 
 **Not Preferred:**
@@ -258,7 +258,7 @@ Direct access to instance variables that 'back' properties should be avoided exc
 **Preferred:**
 
 ```objc
-@interface RWTTutorial : NSObject
+@interface Tutorial : NSObject
 
 @property (strong, nonatomic) NSString *tutorialName;
 
@@ -268,7 +268,7 @@ Direct access to instance variables that 'back' properties should be avoided exc
 **Not Preferred:**
 
 ```objc
-@interface RWTTutorial : NSObject {
+@interface Tutorial : NSObject {
   NSString *tutorialName;
 }
 ```
@@ -356,15 +356,15 @@ Constants are preferred over in-line string literals or numbers, as they allow f
 **Preferred:**
 
 ```objc
-static NSString * const RWTAboutViewControllerCompanyName = @"RayWenderlich.com";
+static NSString * const AboutViewControllerCompanyName = @"Multitracks";
 
-static CGFloat const RWTImageThumbnailHeight = 50.0;
+static CGFloat const ImageThumbnailHeight = 50.0;
 ```
 
 **Not Preferred:**
 
 ```objc
-#define CompanyName @"RayWenderlich.com"
+#define CompanyName @"Multitracks"
 
 #define thumbnailHeight 2
 ```
@@ -376,21 +376,21 @@ When using `enum`s, it is recommended to use the new fixed underlying type speci
 **For Example:**
 
 ```objc
-typedef NS_ENUM(NSInteger, RWTLeftMenuTopItemType) {
-  RWTLeftMenuTopItemMain,
-  RWTLeftMenuTopItemShows,
-  RWTLeftMenuTopItemSchedule
+typedef NS_ENUM(NSInteger, LeftMenuTopItemType) {
+  LeftMenuTopItemMain,
+  LeftMenuTopItemShows,
+  LeftMenuTopItemSchedule
 };
 ```
 
-You can also make explicit value assignments (showing older k-style constant definition):
+You can also make explicit value assignments:
 
 ```objc
-typedef NS_ENUM(NSInteger, RWTGlobalConstants) {
-  RWTPinSizeMin = 1,
-  RWTPinSizeMax = 5,
-  RWTPinCountMin = 100,
-  RWTPinCountMax = 500,
+typedef NS_ENUM(NSInteger, GlobalConstants) {
+  PinSizeMin = 1,
+  PinSizeMax = 5,
+  PinCountMin = 100,
+  PinCountMax = 500,
 };
 ```
 
@@ -450,16 +450,16 @@ switch (condition) {
 When using an enumerated type for a switch, 'default' is not needed.   For example:
 
 ```objc
-RWTLeftMenuTopItemType menuType = RWTLeftMenuTopItemMain;
+LeftMenuTopItemType menuType = LeftMenuTopItemMain;
 
 switch (menuType) {
-  case RWTLeftMenuTopItemMain:
+  case LeftMenuTopItemMain:
     // ...
     break;
-  case RWTLeftMenuTopItemShows:
+  case LeftMenuTopItemShows:
     // ...
     break;
-  case RWTLeftMenuTopItemSchedule:
+  case LeftMenuTopItemSchedule:
     // ...
     break;
 }
@@ -468,12 +468,12 @@ switch (menuType) {
 
 ## Private Properties
 
-Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as `RWTPrivate` or `private`) should never be used unless extending another class.   The Anonymous category can be shared/exposed for testing using the <headerfile>+Private.h file naming convention.
+Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as `Private` or `private`) should never be used unless extending another class.   The Anonymous category can be shared/exposed for testing using the <headerfile>+Private.h file naming convention.
 
 **For Example:**
 
 ```objc
-@interface RWTDetailViewController ()
+@interface DetailViewController ()
 
 @property (strong, nonatomic) GADBannerView *googleAdView;
 @property (strong, nonatomic) ADBannerView *iAdView;
@@ -680,37 +680,8 @@ Singleton objects should use a thread-safe pattern for creating their shared ins
 This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.blogspot.com/2011/04/singletons-your-doing-them-wrong.html).
 
 
-## Line Breaks
-
-Line breaks are an important topic since this style guide is focused for print and online readability.
-
-For example:
-```objc
-self.productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
-```
-A long line of code like this should be carried on to the second line adhering to this style guide's Spacing section (two spaces).
-```objc
-self.productsRequest = [[SKProductsRequest alloc] 
-  initWithProductIdentifiers:productIdentifiers];
-```
-
-
 ## Xcode project
 
 The physical files should be kept in sync with the Xcode project files in order to avoid file sprawl. Any Xcode groups created should be reflected by folders in the filesystem. Code should be grouped not only by type, but also by feature for greater clarity.
 
 When possible, always turn on "Treat Warnings as Errors" in the target's Build Settings and enable as many [additional warnings](http://boredzo.org/blog/archives/2009-11-07/warnings) as possible. If you need to ignore a specific warning, use [Clang's pragma feature](http://clang.llvm.org/docs/UsersManual.html#controlling-diagnostics-via-pragmas).
-
-# Other Objective-C Style Guides
-
-If ours doesn't fit your tastes, have a look at some other style guides:
-
-* [Robots & Pencils](https://github.com/RobotsAndPencils/objective-c-style-guide)
-* [New York Times](https://github.com/NYTimes/objective-c-style-guide)
-* [Google](http://google-styleguide.googlecode.com/svn/trunk/objcguide.xml)
-* [GitHub](https://github.com/github/objective-c-conventions)
-* [Adium](https://trac.adium.im/wiki/CodingStyle)
-* [Sam Soffes](https://gist.github.com/soffes/812796)
-* [CocoaDevCentral](http://cocoadevcentral.com/articles/000082.php)
-* [Luke Redpath](http://lukeredpath.co.uk/blog/my-objective-c-style-guide.html)
-* [Marcus Zarra](http://www.cimgf.com/zds-code-style-guide/)
