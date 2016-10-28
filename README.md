@@ -574,7 +574,7 @@ Where class constructor methods are used, these should always return type of 'in
 
 ```objc
 @interface Airplane
-+ (instancetype)airplaneWithType:(RWTAirplaneType)type;
++ (instancetype)airplaneWithType:(AirplaneType)type;
 @end
 ```
 
